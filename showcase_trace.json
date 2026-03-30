@@ -1,0 +1,648 @@
+{
+  "trace_id": "21172bfd17af4eaa9ddd867e91d76244",
+  "name": "customer-support-pipeline",
+  "start_time": "2026-03-30T17:39:40.397075Z",
+  "end_time": "2026-03-30T17:39:45.717341Z",
+  "root_span": {
+    "trace_id": "21172bfd17af4eaa9ddd867e91d76244",
+    "span_id": "746b3207a6394879",
+    "parent_span_id": null,
+    "name": "customer-support-pipeline",
+    "kind": "chain",
+    "status": "ok",
+    "start_time": "2026-03-30T17:39:40.397075Z",
+    "end_time": "2026-03-30T17:39:45.717292Z",
+    "attributes": {
+      "pipeline": "support-automation"
+    },
+    "events": [],
+    "token_usage": null,
+    "model_name": null,
+    "input_data": null,
+    "output_data": null,
+    "error": null,
+    "children": [
+      {
+        "trace_id": "21172bfd17af4eaa9ddd867e91d76244",
+        "span_id": "53f79b9d278f44a7",
+        "parent_span_id": "746b3207a6394879",
+        "name": "email-reader",
+        "kind": "tool",
+        "status": "ok",
+        "start_time": "2026-03-30T17:39:40.397568Z",
+        "end_time": "2026-03-30T17:39:40.594015Z",
+        "attributes": {},
+        "events": [],
+        "token_usage": null,
+        "model_name": null,
+        "input_data": {
+          "email_id": "msg_9x2k4"
+        },
+        "output_data": {
+          "id": "msg_9x2k4",
+          "from": "john@acmecorp.com",
+          "subject": "Urgent: Production API returning 500 errors",
+          "body": "Hi Support,\n\nOur production integration has been returning 500 errors since 2pm UTC. We're on the Enterprise plan and this is blocking our release. Error: 'rate_limit_exceeded'. Can you please look into this ASAP?\n\nTicket: ACME-4521\nPriority: P0\n\nThanks,\nJohn",
+          "priority": "high",
+          "timestamp": "2026-03-31T14:23:00Z"
+        },
+        "error": null,
+        "children": []
+      },
+      {
+        "trace_id": "21172bfd17af4eaa9ddd867e91d76244",
+        "span_id": "ca62104f57534c3c",
+        "parent_span_id": "746b3207a6394879",
+        "name": "triage-agent",
+        "kind": "agent",
+        "status": "ok",
+        "start_time": "2026-03-30T17:39:40.602775Z",
+        "end_time": "2026-03-30T17:39:41.827785Z",
+        "attributes": {},
+        "events": [],
+        "token_usage": null,
+        "model_name": null,
+        "input_data": {
+          "email": {
+            "id": "msg_9x2k4",
+            "from": "john@acmecorp.com",
+            "subject": "Urgent: Production API returning 500 errors",
+            "body": "Hi Support,\n\nOur production integration has been returning 500 errors since 2pm UTC. We're on the Enterprise plan and this is blocking our release. Error: 'rate_limit_exceeded'. Can you please look into this ASAP?\n\nTicket: ACME-4521\nPriority: P0\n\nThanks,\nJohn",
+            "priority": "high",
+            "timestamp": "2026-03-31T14:23:00Z"
+          }
+        },
+        "output_data": {
+          "category": "api_error",
+          "priority": "P0",
+          "requires_human": false,
+          "team": "platform",
+          "sentiment": {
+            "sentiment": "unknown",
+            "urgency": 0.8,
+            "churn_risk": 0.5
+          }
+        },
+        "error": null,
+        "children": [
+          {
+            "trace_id": "21172bfd17af4eaa9ddd867e91d76244",
+            "span_id": "657fc0b7ea01484a",
+            "parent_span_id": "ca62104f57534c3c",
+            "name": "classify-email",
+            "kind": "llm",
+            "status": "ok",
+            "start_time": "2026-03-30T17:39:40.603006Z",
+            "end_time": "2026-03-30T17:39:40.839444Z",
+            "attributes": {},
+            "events": [],
+            "token_usage": {
+              "prompt_tokens": 516,
+              "completion_tokens": 188,
+              "total_tokens": 704,
+              "prompt_cost_per_1k": 0.00025,
+              "completion_cost_per_1k": 0.00125
+            },
+            "model_name": "claude-4-haiku",
+            "input_data": {
+              "prompt": "Classify this support email:\nSubject: Urgent: Production API returning 500 errors\nBody: Hi Support,\n\nOur production integration has been returning 500 errors since 2pm UTC. We're on the Enterprise plan and this is blocking our release. Error: 'rate_limit_exceeded'. Can you please look into this ASAP",
+              "system": null
+            },
+            "output_data": {
+              "response": "[classify-email response for model claude-4-haiku]"
+            },
+            "error": null,
+            "children": []
+          },
+          {
+            "trace_id": "21172bfd17af4eaa9ddd867e91d76244",
+            "span_id": "acaf9cc7f4054188",
+            "parent_span_id": "ca62104f57534c3c",
+            "name": "sentiment-api",
+            "kind": "tool",
+            "status": "error",
+            "start_time": "2026-03-30T17:39:40.840303Z",
+            "end_time": "2026-03-30T17:39:41.223067Z",
+            "attributes": {},
+            "events": [
+              {
+                "name": "exception",
+                "timestamp": "2026-03-30T17:39:41.222662Z",
+                "attributes": {
+                  "exception.type": "ConnectionError",
+                  "exception.message": "Sentiment API timeout after 5000ms",
+                  "exception.stacktrace": "Traceback (most recent call last):\n  File \"/Users/wangweiwei/agent-trace/agent_trace/core/decorators.py\", line 152, in sync_wrapper\n    result = func(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/wangweiwei/agent-trace/examples/showcase_demo.py\", line 138, in analyze_sentiment\n    raise ConnectionError(\"Sentiment API timeout after 5000ms\")\nConnectionError: Sentiment API timeout after 5000ms\n"
+                }
+              },
+              {
+                "name": "exception",
+                "timestamp": "2026-03-30T17:39:41.223061Z",
+                "attributes": {
+                  "exception.type": "ConnectionError",
+                  "exception.message": "Sentiment API timeout after 5000ms",
+                  "exception.stacktrace": "Traceback (most recent call last):\n  File \"/Users/wangweiwei/agent-trace/agent_trace/core/tracer.py\", line 213, in start_span\n    yield span\n  File \"/Users/wangweiwei/agent-trace/agent_trace/core/decorators.py\", line 49, in _auto_span\n    yield span\n  File \"/Users/wangweiwei/agent-trace/agent_trace/core/decorators.py\", line 152, in sync_wrapper\n    result = func(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/wangweiwei/agent-trace/examples/showcase_demo.py\", line 138, in analyze_sentiment\n    raise ConnectionError(\"Sentiment API timeout after 5000ms\")\nConnectionError: Sentiment API timeout after 5000ms\n"
+                }
+              }
+            ],
+            "token_usage": null,
+            "model_name": null,
+            "input_data": {
+              "text": "Hi Support,\n\nOur production integration has been returning 500 errors since 2pm UTC. We're on the Enterprise plan and this is blocking our release. Error: 'rate_limit_exceeded'. Can you please look into this ASAP?\n\nTicket: ACME-4521\nPriority: P0\n\nThanks,\nJohn"
+            },
+            "output_data": null,
+            "error": "ConnectionError: Sentiment API timeout after 5000ms",
+            "children": []
+          },
+          {
+            "trace_id": "21172bfd17af4eaa9ddd867e91d76244",
+            "span_id": "779125ba63e34fb5",
+            "parent_span_id": "ca62104f57534c3c",
+            "name": "sentiment-api",
+            "kind": "tool",
+            "status": "error",
+            "start_time": "2026-03-30T17:39:41.428416Z",
+            "end_time": "2026-03-30T17:39:41.827614Z",
+            "attributes": {},
+            "events": [
+              {
+                "name": "exception",
+                "timestamp": "2026-03-30T17:39:41.826431Z",
+                "attributes": {
+                  "exception.type": "ConnectionError",
+                  "exception.message": "Sentiment API timeout after 5000ms",
+                  "exception.stacktrace": "Traceback (most recent call last):\n  File \"/Users/wangweiwei/agent-trace/examples/showcase_demo.py\", line 207, in triage_agent\n    sentiment = analyze_sentiment(email[\"body\"])\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/wangweiwei/agent-trace/agent_trace/core/decorators.py\", line 152, in sync_wrapper\n    result = func(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/wangweiwei/agent-trace/examples/showcase_demo.py\", line 138, in analyze_sentiment\n    raise ConnectionError(\"Sentiment API timeout after 5000ms\")\nConnectionError: Sentiment API timeout after 5000ms\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/Users/wangweiwei/agent-trace/agent_trace/core/decorators.py\", line 152, in sync_wrapper\n    result = func(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/wangweiwei/agent-trace/examples/showcase_demo.py\", line 138, in analyze_sentiment\n    raise ConnectionError(\"Sentiment API timeout after 5000ms\")\nConnectionError: Sentiment API timeout after 5000ms\n"
+                }
+              },
+              {
+                "name": "exception",
+                "timestamp": "2026-03-30T17:39:41.827589Z",
+                "attributes": {
+                  "exception.type": "ConnectionError",
+                  "exception.message": "Sentiment API timeout after 5000ms",
+                  "exception.stacktrace": "Traceback (most recent call last):\n  File \"/Users/wangweiwei/agent-trace/examples/showcase_demo.py\", line 207, in triage_agent\n    sentiment = analyze_sentiment(email[\"body\"])\n                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/wangweiwei/agent-trace/agent_trace/core/decorators.py\", line 152, in sync_wrapper\n    result = func(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/wangweiwei/agent-trace/examples/showcase_demo.py\", line 138, in analyze_sentiment\n    raise ConnectionError(\"Sentiment API timeout after 5000ms\")\nConnectionError: Sentiment API timeout after 5000ms\n\nDuring handling of the above exception, another exception occurred:\n\nTraceback (most recent call last):\n  File \"/Users/wangweiwei/agent-trace/agent_trace/core/tracer.py\", line 213, in start_span\n    yield span\n  File \"/Users/wangweiwei/agent-trace/agent_trace/core/decorators.py\", line 49, in _auto_span\n    yield span\n  File \"/Users/wangweiwei/agent-trace/agent_trace/core/decorators.py\", line 152, in sync_wrapper\n    result = func(*args, **kwargs)\n             ^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/wangweiwei/agent-trace/examples/showcase_demo.py\", line 138, in analyze_sentiment\n    raise ConnectionError(\"Sentiment API timeout after 5000ms\")\nConnectionError: Sentiment API timeout after 5000ms\n"
+                }
+              }
+            ],
+            "token_usage": null,
+            "model_name": null,
+            "input_data": {
+              "text": "Hi Support,\n\nOur production integration has been returning 500 errors since 2pm UTC. We're on the Enterprise plan and this is blocking our release. Error: 'rate_limit_exceeded'. Can you please look into this ASAP?\n\nTicket: ACME-4521\nPriority: P0\n\nThanks,\nJohn"
+            },
+            "output_data": null,
+            "error": "ConnectionError: Sentiment API timeout after 5000ms",
+            "children": []
+          }
+        ]
+      },
+      {
+        "trace_id": "21172bfd17af4eaa9ddd867e91d76244",
+        "span_id": "acfd1a6ad25a408b",
+        "parent_span_id": "746b3207a6394879",
+        "name": "research-agent",
+        "kind": "agent",
+        "status": "ok",
+        "start_time": "2026-03-30T17:39:41.830088Z",
+        "end_time": "2026-03-30T17:39:42.820663Z",
+        "attributes": {},
+        "events": [],
+        "token_usage": null,
+        "model_name": null,
+        "input_data": {
+          "email": {
+            "id": "msg_9x2k4",
+            "from": "john@acmecorp.com",
+            "subject": "Urgent: Production API returning 500 errors",
+            "body": "Hi Support,\n\nOur production integration has been returning 500 errors since 2pm UTC. We're on the Enterprise plan and this is blocking our release. Error: 'rate_limit_exceeded'. Can you please look into this ASAP?\n\nTicket: ACME-4521\nPriority: P0\n\nThanks,\nJohn",
+            "priority": "high",
+            "timestamp": "2026-03-31T14:23:00Z"
+          },
+          "triage": {
+            "category": "api_error",
+            "priority": "P0",
+            "requires_human": false,
+            "team": "platform",
+            "sentiment": {
+              "sentiment": "unknown",
+              "urgency": 0.8,
+              "churn_risk": 0.5
+            }
+          }
+        },
+        "output_data": {
+          "root_cause": "Customer exceeded daily API limit (12,847/10,000)",
+          "customer": {
+            "customer_id": "cust_8a3f2b",
+            "company": "Acme Corp",
+            "plan": "enterprise",
+            "api_calls_today": 12847,
+            "daily_limit": 10000,
+            "status": "rate_limited",
+            "account_health": "at_risk",
+            "mrr": 4500
+          },
+          "kb_articles": [
+            "kb-1042",
+            "kb-0887",
+            "kb-1205"
+          ],
+          "recommendation": "temporary_limit_increase",
+          "analysis": "[analyze-issue response for model claude-4-sonnet]"
+        },
+        "error": null,
+        "children": [
+          {
+            "trace_id": "21172bfd17af4eaa9ddd867e91d76244",
+            "span_id": "311d3b75a1584f97",
+            "parent_span_id": "acfd1a6ad25a408b",
+            "name": "vector-search",
+            "kind": "tool",
+            "status": "ok",
+            "start_time": "2026-03-30T17:39:41.830400Z",
+            "end_time": "2026-03-30T17:39:42.080118Z",
+            "attributes": {},
+            "events": [],
+            "token_usage": null,
+            "model_name": null,
+            "input_data": {
+              "query": "rate_limit_exceeded 500 error enterprise plan",
+              "top_k": 3
+            },
+            "output_data": [
+              {
+                "doc_id": "kb-1042",
+                "title": "Rate Limiting — Troubleshooting Guide",
+                "content": "When users hit rate_limit_exceeded, check: 1) Current plan limits 2) Burst quota 3) API key tier...",
+                "score": 0.94
+              },
+              {
+                "doc_id": "kb-0887",
+                "title": "Enterprise Plan — Rate Limits",
+                "content": "Enterprise plan: 10,000 RPM, 1M tokens/day. Burst: 2x for 60s. Contact support for temporary increases...",
+                "score": 0.89
+              },
+              {
+                "doc_id": "kb-1205",
+                "title": "500 Error Codes — Internal Reference",
+                "content": "500 errors with rate_limit_exceeded indicate the account has exceeded allocated quota. Resolution: ...",
+                "score": 0.85
+              }
+            ],
+            "error": null,
+            "children": []
+          },
+          {
+            "trace_id": "21172bfd17af4eaa9ddd867e91d76244",
+            "span_id": "d4adf33a72074fbc",
+            "parent_span_id": "acfd1a6ad25a408b",
+            "name": "sql-query",
+            "kind": "tool",
+            "status": "ok",
+            "start_time": "2026-03-30T17:39:42.080332Z",
+            "end_time": "2026-03-30T17:39:42.253323Z",
+            "attributes": {},
+            "events": [],
+            "token_usage": null,
+            "model_name": null,
+            "input_data": {
+              "customer_email": "john@acmecorp.com"
+            },
+            "output_data": {
+              "customer_id": "cust_8a3f2b",
+              "company": "Acme Corp",
+              "plan": "enterprise",
+              "api_calls_today": 12847,
+              "daily_limit": 10000,
+              "status": "rate_limited",
+              "account_health": "at_risk",
+              "mrr": 4500
+            },
+            "error": null,
+            "children": []
+          },
+          {
+            "trace_id": "21172bfd17af4eaa9ddd867e91d76244",
+            "span_id": "90015cac85c34120",
+            "parent_span_id": "acfd1a6ad25a408b",
+            "name": "analyze-issue",
+            "kind": "llm",
+            "status": "ok",
+            "start_time": "2026-03-30T17:39:42.253777Z",
+            "end_time": "2026-03-30T17:39:42.820164Z",
+            "attributes": {},
+            "events": [],
+            "token_usage": {
+              "prompt_tokens": 442,
+              "completion_tokens": 186,
+              "total_tokens": 628,
+              "prompt_cost_per_1k": 0.003,
+              "completion_cost_per_1k": 0.015
+            },
+            "model_name": "claude-4-sonnet",
+            "input_data": {
+              "prompt": "Customer issue: Hi Support,\n\nOur production integration has been returning 500 errors since 2pm UTC. We're on the Enterprise plan and this is blocking our release. Error: 'rate_limit_exceeded'. Can you please look into this ASAP?\n\nTicket: ACME-4521\nPriority: P0\n\nThanks,\nJohn\n\nKnowledge base results:",
+              "system": "You are a senior support engineer. Be thorough."
+            },
+            "output_data": {
+              "response": "[analyze-issue response for model claude-4-sonnet]"
+            },
+            "error": null,
+            "children": []
+          }
+        ]
+      },
+      {
+        "trace_id": "21172bfd17af4eaa9ddd867e91d76244",
+        "span_id": "365bbaace45641d2",
+        "parent_span_id": "746b3207a6394879",
+        "name": "resolution-agent",
+        "kind": "agent",
+        "status": "ok",
+        "start_time": "2026-03-30T17:39:42.824721Z",
+        "end_time": "2026-03-30T17:39:43.454086Z",
+        "attributes": {},
+        "events": [],
+        "token_usage": null,
+        "model_name": null,
+        "input_data": {
+          "research": {
+            "root_cause": "Customer exceeded daily API limit (12,847/10,000)",
+            "customer": {
+              "customer_id": "cust_8a3f2b",
+              "company": "Acme Corp",
+              "plan": "enterprise",
+              "api_calls_today": 12847,
+              "daily_limit": 10000,
+              "status": "rate_limited",
+              "account_health": "at_risk",
+              "mrr": 4500
+            },
+            "kb_articles": [
+              "kb-1042",
+              "kb-0887",
+              "kb-1205"
+            ],
+            "recommendation": "temporary_limit_increase",
+            "analysis": "[analyze-issue response for model claude-4-sonnet]"
+          }
+        },
+        "output_data": {
+          "actions_taken": [
+            "rate_limit_increased_to_20k",
+            "ticket_updated",
+            "slack_notified"
+          ],
+          "override": {
+            "override_id": "ovr_x9k2m",
+            "customer_id": "cust_8a3f2b",
+            "new_limit": 20000,
+            "expires_at": "2026-04-01T14:23:00Z",
+            "status": "applied"
+          }
+        },
+        "error": null,
+        "children": [
+          {
+            "trace_id": "21172bfd17af4eaa9ddd867e91d76244",
+            "span_id": "be362e05fda94408",
+            "parent_span_id": "365bbaace45641d2",
+            "name": "rate-limit-override",
+            "kind": "tool",
+            "status": "ok",
+            "start_time": "2026-03-30T17:39:42.825312Z",
+            "end_time": "2026-03-30T17:39:43.181655Z",
+            "attributes": {},
+            "events": [],
+            "token_usage": null,
+            "model_name": null,
+            "input_data": {
+              "customer_id": "cust_8a3f2b",
+              "new_limit": 20000,
+              "duration_hours": 24
+            },
+            "output_data": {
+              "override_id": "ovr_x9k2m",
+              "customer_id": "cust_8a3f2b",
+              "new_limit": 20000,
+              "expires_at": "2026-04-01T14:23:00Z",
+              "status": "applied"
+            },
+            "error": null,
+            "children": []
+          },
+          {
+            "trace_id": "21172bfd17af4eaa9ddd867e91d76244",
+            "span_id": "b20948591b3d4d2f",
+            "parent_span_id": "365bbaace45641d2",
+            "name": "ticket-update",
+            "kind": "tool",
+            "status": "ok",
+            "start_time": "2026-03-30T17:39:43.181953Z",
+            "end_time": "2026-03-30T17:39:43.316017Z",
+            "attributes": {},
+            "events": [],
+            "token_usage": null,
+            "model_name": null,
+            "input_data": {
+              "ticket_id": "ACME-4521",
+              "status": "in_progress",
+              "notes": "Applied temp limit increase to 20K RPM. Override: ovr_x9k2m"
+            },
+            "output_data": true,
+            "error": null,
+            "children": []
+          },
+          {
+            "trace_id": "21172bfd17af4eaa9ddd867e91d76244",
+            "span_id": "9c25bedb0acb429b",
+            "parent_span_id": "365bbaace45641d2",
+            "name": "slack-notify",
+            "kind": "tool",
+            "status": "ok",
+            "start_time": "2026-03-30T17:39:43.316104Z",
+            "end_time": "2026-03-30T17:39:43.454018Z",
+            "attributes": {},
+            "events": [],
+            "token_usage": null,
+            "model_name": null,
+            "input_data": {
+              "channel": "#support-escalations",
+              "message": "🚨 P0 resolved: Acme Corp ($4500/mo MRR) rate limited. Temp override applied: ovr_x9k2m"
+            },
+            "output_data": true,
+            "error": null,
+            "children": []
+          }
+        ]
+      },
+      {
+        "trace_id": "21172bfd17af4eaa9ddd867e91d76244",
+        "span_id": "dffcfc7fe48443a6",
+        "parent_span_id": "746b3207a6394879",
+        "name": "response-agent",
+        "kind": "agent",
+        "status": "ok",
+        "start_time": "2026-03-30T17:39:43.455070Z",
+        "end_time": "2026-03-30T17:39:45.715446Z",
+        "attributes": {},
+        "events": [],
+        "token_usage": null,
+        "model_name": null,
+        "input_data": {
+          "email": {
+            "id": "msg_9x2k4",
+            "from": "john@acmecorp.com",
+            "subject": "Urgent: Production API returning 500 errors",
+            "body": "Hi Support,\n\nOur production integration has been returning 500 errors since 2pm UTC. We're on the Enterprise plan and this is blocking our release. Error: 'rate_limit_exceeded'. Can you please look into this ASAP?\n\nTicket: ACME-4521\nPriority: P0\n\nThanks,\nJohn",
+            "priority": "high",
+            "timestamp": "2026-03-31T14:23:00Z"
+          },
+          "research": {
+            "root_cause": "Customer exceeded daily API limit (12,847/10,000)",
+            "customer": {
+              "customer_id": "cust_8a3f2b",
+              "company": "Acme Corp",
+              "plan": "enterprise",
+              "api_calls_today": 12847,
+              "daily_limit": 10000,
+              "status": "rate_limited",
+              "account_health": "at_risk",
+              "mrr": 4500
+            },
+            "kb_articles": [
+              "kb-1042",
+              "kb-0887",
+              "kb-1205"
+            ],
+            "recommendation": "temporary_limit_increase",
+            "analysis": "[analyze-issue response for model claude-4-sonnet]"
+          },
+          "resolution": {
+            "actions_taken": [
+              "rate_limit_increased_to_20k",
+              "ticket_updated",
+              "slack_notified"
+            ],
+            "override": {
+              "override_id": "ovr_x9k2m",
+              "customer_id": "cust_8a3f2b",
+              "new_limit": 20000,
+              "expires_at": "2026-04-01T14:23:00Z",
+              "status": "applied"
+            }
+          }
+        },
+        "output_data": "[draft-response response for model claude-4-opus]",
+        "error": null,
+        "children": [
+          {
+            "trace_id": "21172bfd17af4eaa9ddd867e91d76244",
+            "span_id": "32baf91d1ef24004",
+            "parent_span_id": "dffcfc7fe48443a6",
+            "name": "draft-response",
+            "kind": "llm",
+            "status": "ok",
+            "start_time": "2026-03-30T17:39:43.455231Z",
+            "end_time": "2026-03-30T17:39:44.341688Z",
+            "attributes": {},
+            "events": [],
+            "token_usage": {
+              "prompt_tokens": 487,
+              "completion_tokens": 374,
+              "total_tokens": 861,
+              "prompt_cost_per_1k": 0.015,
+              "completion_cost_per_1k": 0.075
+            },
+            "model_name": "claude-4-opus",
+            "input_data": {
+              "prompt": "Write a professional support response.\nCustomer: john@acmecorp.com (Enterprise plan)\nIssue: Rate limiting causing 500 errors\nRoot cause: Exceeded 10K daily limit at 12.8K calls\nResolution: Temp increase to 20K for 24h\nTone: Empathetic, proactive, professional",
+              "system": "You write world-class customer support emails."
+            },
+            "output_data": {
+              "response": "[draft-response response for model claude-4-opus]"
+            },
+            "error": null,
+            "children": []
+          },
+          {
+            "trace_id": "21172bfd17af4eaa9ddd867e91d76244",
+            "span_id": "3c9386f2a205410f",
+            "parent_span_id": "dffcfc7fe48443a6",
+            "name": "review-response",
+            "kind": "llm",
+            "status": "ok",
+            "start_time": "2026-03-30T17:39:44.341967Z",
+            "end_time": "2026-03-30T17:39:45.302631Z",
+            "attributes": {},
+            "events": [],
+            "token_usage": {
+              "prompt_tokens": 497,
+              "completion_tokens": 371,
+              "total_tokens": 868,
+              "prompt_cost_per_1k": 0.003,
+              "completion_cost_per_1k": 0.015
+            },
+            "model_name": "claude-4-sonnet",
+            "input_data": {
+              "prompt": "Review this customer email for:\n1. Accuracy of technical details\n2. Appropriate tone for frustrated Enterprise customer\n3. Clear next steps\n\nDraft: [draft-response response for model claude-4-opus]",
+              "system": null
+            },
+            "output_data": {
+              "response": "[review-response response for model claude-4-sonnet]"
+            },
+            "error": null,
+            "children": []
+          },
+          {
+            "trace_id": "21172bfd17af4eaa9ddd867e91d76244",
+            "span_id": "53be064e9197421f",
+            "parent_span_id": "dffcfc7fe48443a6",
+            "name": "send-email",
+            "kind": "tool",
+            "status": "ok",
+            "start_time": "2026-03-30T17:39:45.302865Z",
+            "end_time": "2026-03-30T17:39:45.526514Z",
+            "attributes": {},
+            "events": [],
+            "token_usage": null,
+            "model_name": null,
+            "input_data": {
+              "to": "john@acmecorp.com",
+              "subject": "Re: Urgent: Production API returning 500 errors [ACME-4521]",
+              "body": "[draft-response response for model claude-4-opus]"
+            },
+            "output_data": true,
+            "error": null,
+            "children": []
+          },
+          {
+            "trace_id": "21172bfd17af4eaa9ddd867e91d76244",
+            "span_id": "016ea52de3e74a3b",
+            "parent_span_id": "dffcfc7fe48443a6",
+            "name": "ticket-update",
+            "kind": "tool",
+            "status": "ok",
+            "start_time": "2026-03-30T17:39:45.526631Z",
+            "end_time": "2026-03-30T17:39:45.715348Z",
+            "attributes": {},
+            "events": [],
+            "token_usage": null,
+            "model_name": null,
+            "input_data": {
+              "ticket_id": "ACME-4521",
+              "status": "resolved",
+              "notes": "Customer response sent. Temp limit increase applied for 24h."
+            },
+            "output_data": true,
+            "error": null,
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  "metadata": {
+    "trigger": "incoming_email",
+    "customer": "Acme Corp",
+    "ticket": "ACME-4521"
+  }
+}

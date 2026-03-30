@@ -1,0 +1,102 @@
+[build-system]
+requires = ["hatchling<1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "traceweave"
+version = "0.1.2"
+description = "Distributed tracing and observability for AI agents. Datadog for AI Agents."
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [
+    { name = "traceweave contributors" },
+]
+keywords = [
+    "ai",
+    "agents",
+    "observability",
+    "tracing",
+    "distributed-tracing",
+    "llm",
+    "monitoring",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: System :: Monitoring",
+    "Topic :: System :: Distributed Computing",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Typing :: Typed",
+]
+dependencies = [
+    "rich>=13.0",
+    "textual>=0.40",
+    "pydantic>=2.0",
+    "websockets>=12.0",
+    "click>=8.0",
+    "orjson>=3.9",
+]
+
+[project.optional-dependencies]
+langchain = [
+    "langchain>=0.1.0",
+    "langchain-core>=0.1.0",
+]
+openai = [
+    "openai>=1.0",
+]
+anthropic = [
+    "anthropic>=0.18",
+]
+crewai = [
+    "crewai>=0.1.0",
+]
+autogen = [
+    "pyautogen>=0.2.0",
+]
+all = [
+    "traceweave[langchain]",
+    "traceweave[openai]",
+    "traceweave[anthropic]",
+    "traceweave[crewai]",
+    "traceweave[autogen]",
+]
+
+[project.scripts]
+traceweave = "agent_trace.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/traceweave/traceweave"
+Documentation = "https://github.com/traceweave/traceweave#readme"
+Repository = "https://github.com/traceweave/traceweave"
+Issues = "https://github.com/traceweave/traceweave/issues"
+Changelog = "https://github.com/traceweave/traceweave/blob/main/CHANGELOG.md"
+
+[tool.hatch.build.targets.wheel]
+packages = ["agent_trace"]
+
+[tool.ruff]
+target-version = "py39"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+[tool.mypy]
+python_version = "3.9"
+strict = true
+warn_return_any = true
+warn_unused_configs = true

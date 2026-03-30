@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 300">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0d1117"/>
+      <stop offset="100%" style="stop-color:#161b22"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#58a6ff"/>
+      <stop offset="100%" style="stop-color:#bc8cff"/>
+    </linearGradient>
+    <linearGradient id="bar1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#39d353"/>
+      <stop offset="80%" style="stop-color:#39d353;stop-opacity:0.3"/>
+    </linearGradient>
+    <linearGradient id="bar2" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#58a6ff"/>
+      <stop offset="60%" style="stop-color:#58a6ff;stop-opacity:0.3"/>
+    </linearGradient>
+    <linearGradient id="bar3" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#bc8cff"/>
+      <stop offset="70%" style="stop-color:#bc8cff;stop-opacity:0.3"/>
+    </linearGradient>
+    <linearGradient id="bar4" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#d29922"/>
+      <stop offset="40%" style="stop-color:#d29922;stop-opacity:0.3"/>
+    </linearGradient>
+    <linearGradient id="bar5" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#f85149"/>
+      <stop offset="30%" style="stop-color:#f85149;stop-opacity:0.3"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="300" fill="url(#bg)" rx="12"/>
+  <rect x="1" y="1" width="1198" height="298" fill="none" stroke="#30363d" stroke-width="1" rx="12"/>
+
+  <!-- Left: Branding -->
+  <text x="80" y="110" font-family="SF Mono, Cascadia Code, Consolas, monospace" font-size="52" font-weight="bold" fill="url(#accent)">🔍 traceweave</text>
+  <text x="80" y="155" font-family="-apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif" font-size="22" fill="#7d8590">Distributed Tracing &amp; Observability for AI Agents</text>
+
+  <!-- Tagline pills -->
+  <rect x="80" y="180" width="120" height="28" rx="14" fill="#1f6feb" fill-opacity="0.2" stroke="#58a6ff" stroke-width="1"/>
+  <text x="140" y="199" font-family="SF Mono, monospace" font-size="13" fill="#58a6ff" text-anchor="middle">Zero Config</text>
+
+  <rect x="212" y="180" width="120" height="28" rx="14" fill="#238636" fill-opacity="0.2" stroke="#3fb950" stroke-width="1"/>
+  <text x="272" y="199" font-family="SF Mono, monospace" font-size="13" fill="#3fb950" text-anchor="middle">Cost Tracking</text>
+
+  <rect x="344" y="180" width="100" height="28" rx="14" fill="#8b5cf6" fill-opacity="0.2" stroke="#bc8cff" stroke-width="1"/>
+  <text x="394" y="199" font-family="SF Mono, monospace" font-size="13" fill="#bc8cff" text-anchor="middle">Beautiful UI</text>
+
+  <rect x="456" y="180" width="108" height="28" rx="14" fill="#9e6a03" fill-opacity="0.2" stroke="#d29922" stroke-width="1"/>
+  <text x="510" y="199" font-family="SF Mono, monospace" font-size="13" fill="#d29922" text-anchor="middle">Open Source</text>
+
+  <!-- pip install -->
+  <rect x="80" y="230" width="280" height="32" rx="6" fill="#0d1117" stroke="#30363d" stroke-width="1"/>
+  <text x="96" y="251" font-family="SF Mono, Cascadia Code, monospace" font-size="14" fill="#7d8590">$</text>
+  <text x="112" y="251" font-family="SF Mono, Cascadia Code, monospace" font-size="14" fill="#e6edf3">pip install traceweave</text>
+
+  <!-- Right: Trace visualization preview -->
+  <g transform="translate(640, 42)">
+    <!-- Trace lines -->
+    <text x="0" y="18" font-family="SF Mono, monospace" font-size="13" fill="#7d8590">📍 customer-support-pipeline</text>
+
+    <text x="16" y="42" font-family="SF Mono, monospace" font-size="12" fill="#39d353">✅</text>
+    <text x="36" y="42" font-family="SF Mono, monospace" font-size="12" fill="#39d353">🤖 triage-agent</text>
+    <rect x="190" y="32" width="280" height="12" rx="3" fill="url(#bar1)" fill-opacity="0.6"/>
+    <text x="480" y="42" font-family="SF Mono, monospace" font-size="11" fill="#7d8590">1.2s</text>
+
+    <text x="16" y="66" font-family="SF Mono, monospace" font-size="12" fill="#58a6ff">✅</text>
+    <text x="36" y="66" font-family="SF Mono, monospace" font-size="12" fill="#58a6ff">🤖 research-agent</text>
+    <rect x="190" y="56" width="200" height="12" rx="3" fill="url(#bar2)" fill-opacity="0.6"/>
+    <text x="400" y="66" font-family="SF Mono, monospace" font-size="11" fill="#7d8590">1.0s  628 tok</text>
+
+    <text x="16" y="90" font-family="SF Mono, monospace" font-size="12" fill="#bc8cff">✅</text>
+    <text x="36" y="90" font-family="SF Mono, monospace" font-size="12" fill="#bc8cff">🧠 draft-response</text>
+    <rect x="190" y="80" width="240" height="12" rx="3" fill="url(#bar3)" fill-opacity="0.6"/>
+    <text x="440" y="90" font-family="SF Mono, monospace" font-size="11" fill="#7d8590">0.9s  $0.04</text>
+
+    <text x="16" y="114" font-family="SF Mono, monospace" font-size="12" fill="#d29922">✅</text>
+    <text x="36" y="114" font-family="SF Mono, monospace" font-size="12" fill="#d29922">🔧 vector-search</text>
+    <rect x="190" y="104" width="140" height="12" rx="3" fill="url(#bar4)" fill-opacity="0.6"/>
+    <text x="340" y="114" font-family="SF Mono, monospace" font-size="11" fill="#7d8590">0.3s  3 docs</text>
+
+    <text x="16" y="138" font-family="SF Mono, monospace" font-size="12" fill="#f85149">❌</text>
+    <text x="36" y="138" font-family="SF Mono, monospace" font-size="12" fill="#f85149">🔧 sentiment-api</text>
+    <rect x="190" y="128" width="100" height="12" rx="3" fill="url(#bar5)" fill-opacity="0.6"/>
+    <text x="300" y="138" font-family="SF Mono, monospace" font-size="11" fill="#f85149">TIMEOUT</text>
+
+    <!-- Summary line -->
+    <line x1="0" y1="155" x2="510" y2="155" stroke="#30363d" stroke-width="1"/>
+    <text x="0" y="175" font-family="SF Mono, monospace" font-size="12" fill="#58a6ff">⏱ 5.3s</text>
+    <text x="80" y="175" font-family="SF Mono, monospace" font-size="12" fill="#bc8cff">📊 3.1k tokens</text>
+    <text x="210" y="175" font-family="SF Mono, monospace" font-size="12" fill="#3fb950">💰 $0.047</text>
+    <text x="320" y="175" font-family="SF Mono, monospace" font-size="12" fill="#f85149">❌ 2 errors</text>
+  </g>
+</svg>
