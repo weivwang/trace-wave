@@ -19,7 +19,7 @@ from __future__ import annotations
 
 import threading
 import uuid
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from typing import Any, Callable, Optional
 from contextlib import contextmanager
 
@@ -138,7 +138,7 @@ class AgentTracer:
             raise
         finally:
             root_span.end()
-            trace.end_time = datetime.now(UTC)
+            trace.end_time = datetime.now(timezone.utc)
             # Restore previous context using proper reset
             reset_current_span(span_token)
             reset_current_trace(trace_token)

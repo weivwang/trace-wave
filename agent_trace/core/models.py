@@ -7,7 +7,7 @@ form the data layer that all other components build upon.
 from __future__ import annotations
 
 import uuid
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from enum import Enum
 from typing import Any, Optional
 
@@ -74,7 +74,7 @@ class SpanEvent(BaseModel):
     """
 
     name: str
-    timestamp: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    timestamp: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     attributes: dict[str, Any] = Field(default_factory=dict)
 
 
@@ -92,7 +92,7 @@ class SpanData(BaseModel):
     name: str
     kind: SpanKind
     status: SpanStatus = SpanStatus.RUNNING
-    start_time: datetime = Field(default_factory=lambda: datetime.now(UTC))
+    start_time: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     end_time: Optional[datetime] = None
     attributes: dict[str, Any] = Field(default_factory=dict)
     events: list[SpanEvent] = Field(default_factory=list)

@@ -14,7 +14,7 @@ the parent :class:`~agent_trace.core.tracer.AgentTracer` on completion.
 from __future__ import annotations
 
 import traceback
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from typing import TYPE_CHECKING, Any, Optional
 
 from agent_trace.core.models import SpanData, SpanKind, SpanStatus, SpanEvent, TokenUsage
@@ -159,7 +159,7 @@ class Span:
         if self._finished:
             return
         self._finished = True
-        self._data.end_time = datetime.now(UTC)
+        self._data.end_time = datetime.now(timezone.utc)
         if status:
             self._data.status = status
         elif self._data.status == SpanStatus.RUNNING:

@@ -277,10 +277,14 @@ export_chrome(trace, "my-trace.chrome.json")
 | **[Simple Demo](examples/simple_demo.py)** | Minimal trace in 10 lines | ⭐ |
 | **[Multi-Agent Research](examples/multi_agent_demo.py)** | 4-agent team with tools & LLM calls | ⭐⭐ |
 | **[Showcase: AI Support Pipeline](examples/showcase_demo.py)** | Full production simulation: 4 agents, RAG, error handling, 3 models | ⭐⭐⭐ |
+| **[DeepSeek Agent (Real API)](examples/deepseek_agent_demo.py)** | Real DeepSeek-powered agent with live tracing, TUI & web dashboard | ⭐⭐⭐ |
 
 ```bash
 # Run the showcase demo (no API keys needed!)
 python examples/showcase_demo.py
+
+# Run the real DeepSeek agent demo (requires API key)
+python examples/deepseek_agent_demo.py --dashboard
 ```
 
 ---
@@ -348,7 +352,7 @@ Contributions welcome! Whether it's a bug report, feature request, or pull reque
 
 If you find traceweave useful, please give us a star! It helps others discover the project.
 
-[![Star History Chart](https://api.star-history.com/svg?repos=traceweave/traceweave&type=Date)](https://star-history.com/#traceweave/traceweave&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=weivwang/trace-wave&type=Date)](https://star-history.com/#weivwang/trace-wave&Date)
 
 ---
 
@@ -375,6 +379,6 @@ MIT License — see [LICENSE](LICENSE) for details.
 [license-link]: https://opensource.org/licenses/MIT
 [downloads-shield]: https://img.shields.io/pypi/dm/traceweave?color=369eff&labelColor=black&style=flat-square
 [test-shield]: https://img.shields.io/badge/tests-39%20passed-369eff?labelColor=black&logo=pytest&logoColor=white&style=flat-square
-[test-link]: https://github.com/traceweave/traceweave/actions
-[docs-link]: https://github.com/traceweave/traceweave#-quick-start
-[issues-link]: https://github.com/traceweave/traceweave/issues
+[test-link]: https://github.com/weivwang/trace-wave/actions
+[docs-link]: https://github.com/weivwang/trace-wave#-quick-start
+[issues-link]: https://github.com/weivwang/trace-wave/issues
