@@ -42,7 +42,7 @@ console = Console()
 #  ⚙️  Configuration — Fill in your API key here
 # ═══════════════════════════════════════════════════════════════════
 
-API_KEY = os.environ.get("DEEPSEEK_API_KEY", "your token")
+API_KEY = os.environ.get("DEEPSEEK_API_KEY", "your-api-key-here")
 BASE_URL = "https://api.deepseek.com"
 MODEL = "deepseek-chat"
 MAX_TURN = 20
